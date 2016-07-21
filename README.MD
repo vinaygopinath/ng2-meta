@@ -24,7 +24,6 @@ const routes: RouterConfig = [
     <strong>data: {
       meta: {
         title: 'Home page',
-        titleSuffix: ' | Website Name',
         description: 'Description of the home page'
       }
     }</strong>
@@ -35,10 +34,10 @@ const routes: RouterConfig = [
     <strong>data: {
       meta: {
         title: 'Dashboard',
-        description: 'Description of the dashboard page'
+        description: 'Description of the dashboard page',
+        'og:image': 'http://example.com/dashboard-image.png'
       }
-    }
-    </strong>
+    }</strong>
   }
 ];
 </code>
@@ -75,6 +74,56 @@ export class AppComponent {
 </pre>
 
 You're all set! ng2-meta will update the meta tags whenever the route changes.
+
+## Options
+
+### Set defaults
+
+Set default values for tags. These values are used when routes without `meta: {}` information are encountered.
+```typescript
+import { MetaConfig, MetaService } from 'ng2-meta';
+
+let metaConfig = new MetaConfig({
+  //Append a title suffix such as a site name to all titles
+  //Defaults to false
+  useTitleSuffix: true,
+  defaults: {
+    title: 'Default title for pages without meta in their route',
+    titleSuffix: ' | Site Name',
+    'og:image': 'http://example.com/default-image.png',
+    'any other': 'arbitrary tag can be used'
+  }
+});
+```
+
+### Change meta tags programmatically
+```typescript
+class ProductComponent {
+  ...
+  constructor(private metaService: MetaService) {}
+  
+  ngOnInit() {
+    this.product = //HTTP GET for product in catalogue
+    metaService.setTitle('Product page for '+this.product.name);
+    metaService.setTag('og:image',this.product.imageURL);
+  }
+}
+```
+
+### Define fallback meta content in HTML
+While Google executes Javascript and extracts meta tags set by ng2-meta, many bots (like Facebook and Twitter) do not execute Javascript. Consider defining fallback meta tags in your HTML for such bots. The fallback content is overridden by ng2-meta in Javascript-enabled environments.
+
+```html
+<html>
+  <head>
+    <meta name="title" content="Website Name">
+    <meta name="og:title" content="Website Name">
+    <meta name="description" content="General description of your site">
+    <meta name="og:description" content="General description of your site">
+    <meta name="og:image" content="http://example.com/fallback-image.png">
+  </head>
+</html>
+```
 
 ## Development
 
