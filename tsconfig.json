@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "ES5",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "noEmitOnError": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "inlineSources": true
+  },
+  "files": [
+    "typings/index.d.ts",
+    "src/meta.service.ts",
+    "src/meta.service.spec.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
