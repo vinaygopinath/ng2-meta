@@ -47,11 +47,13 @@ const routes: RouterConfig = [
 
 <pre>
 <code>
+<strong>import { Title } from '@angular/platform-browser';</strong>
 <strong>import { MetaService } from 'ng2-meta';</strong>
 ...
 bootstrap(AppComponent, [
   HTTP_PROVIDERS,
   ...
+  Title,
   <strong>MetaService</strong>
 ]);
 </code>
@@ -94,6 +96,15 @@ let metaConfig = new MetaConfig({
     'any other': 'arbitrary tag can be used'
   }
 });
+
+bootstrap(AppComponent, [
+  HTTP_PROVIDERS,
+  ...,
+  Title,
+  provide('meta.config', {useValue: metaConfig}),
+  MetaService
+]);
+
 ```
 
 ### Change meta tags programmatically
@@ -124,6 +135,32 @@ While Google executes Javascript and extracts meta tags set by ng2-meta, many bo
   </head>
 </html>
 ```
+
+## FAQ
+
+#### I'm using angular-cli. How can I add ng2-meta?
+After installing `ng2-meta` from npm, modify your **angular-cli-build.js**
+```javascript
+vendorNpmFiles: [
+....
+'ng2-meta/dist/meta.service.js'
+]
+```
+
+Modify **system-config.ts**
+```typescript
+const map: any = {
+  'ng2-meta': 'vendor/ng2-meta/dist/meta.service.js'
+}
+
+/** User packages configuration. */
+const packages: any = {
+  'ng2-meta': {
+    format: 'cjs'
+  }
+}
+```
+
 
 ## Development
 
