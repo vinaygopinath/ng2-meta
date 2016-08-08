@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/platform-browser';
 import {Router, NavigationEnd, ActivatedRoute, PRIMARY_OUTLET} from '@angular/router';
@@ -26,7 +26,8 @@ export class MetaService {
 
   constructor(private titleService: Title, @Inject(DOCUMENT) private document,
   private router: Router, private activatedRoute: ActivatedRoute,
-  @Inject('meta.config') private metaConfig: MetaConfig) {
+  @Inject('meta.config') @Optional() private metaConfig: MetaConfig = new MetaConfig()) {
+    this.metaConfig = metaConfig || new MetaConfig();
     this.headElement = this.document.querySelector('head');
     // Credit: https://github.com/angular/angular/issues/9662#issuecomment-229058750
     this.sub = this.router.events
