@@ -11,6 +11,8 @@ To install this library, run:
 $ npm install ng2-meta --save
 ```
 
+(ng2-meta works with angular2 RC4 and @angular/router 3.0.0-beta.2 and higher)
+
 ### Modify routes
 
 Add meta tags to routes. By default, `title` and `description` values are duplicated for `og:title` and `og:description`, so there's no need to add them separately.
@@ -109,14 +111,16 @@ bootstrap(AppComponent, [
 
 ### Change meta tags programmatically
 ```typescript
-class ProductComponent {
+import { Component, OnInit } from '@angular/core';
+
+class ProductComponent implements OnInit {
   ...
   constructor(private metaService: MetaService) {}
   
   ngOnInit() {
     this.product = //HTTP GET for product in catalogue
-    metaService.setTitle('Product page for '+this.product.name);
-    metaService.setTag('og:image',this.product.imageURL);
+    this.metaService.setTitle('Product page for '+this.product.name);
+    this.metaService.setTag('og:image',this.product.imageURL);
   }
 }
 ```
