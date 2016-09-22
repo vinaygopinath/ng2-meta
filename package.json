@@ -5,8 +5,7 @@
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "test": "tsc && karma start config/karma.conf.js",
-    "postinstall": "typings install",
-    "prepublish": "tsc",
+    "prepublish": "tsc && typings install",
     "tsc": "tsc",
     "typings": "typings"
   },
