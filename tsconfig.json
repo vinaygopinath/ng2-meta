@@ -10,11 +10,20 @@
     "noEmitOnError": true,
     "declaration": true,
     "outDir": "./dist",
-    "inlineSources": true
+    "inlineSources": true,
+    "typeRoots": [
+      "../node_modules/@types"
+    ],
+    "types": [
+      "core-js"
+    ]
   },
   "files": [
     "typings/index.d.ts",
     "src/meta.service.ts",
+    "src/meta.module.ts",
+    "src/models/meta-config.ts",
+    "src/index.ts",
     "src/meta.service.spec.ts"
   ],
   "exclude": [
