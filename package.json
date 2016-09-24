@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "test": "tsc && karma start config/karma.conf.js",
-    "prepublish": "tsc && typings install",
+    "prepublish": "tsc",
+    "postinstall": "tsc",
     "tsc": "tsc",
     "typings": "typings"
   },
@@ -29,7 +30,6 @@
     "url": "https://github.com/vinaygopinath/ng2-meta/issues"
   },
   "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
   "peerDependencies": {
     "@angular/common": "^2.0.0",
     "@angular/core": "^2.0.0",
