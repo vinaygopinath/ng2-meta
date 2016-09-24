@@ -40,10 +40,10 @@
     "zone.js": "^0.6.25"
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.8"
+    "reflect-metadata": "^0.1.8",
+    "@types/core-js": "^0.9.34"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.34",
     "codelyzer": "^0.0.20",
     "tslint": "^3.6.0",
     "typescript": "^2.0.3",
