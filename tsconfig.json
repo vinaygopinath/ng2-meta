@@ -20,11 +20,10 @@
   },
   "files": [
     "typings/index.d.ts",
+    "src/models/meta-config.ts",
     "src/meta.service.ts",
     "src/meta.module.ts",
-    "src/models/meta-config.ts",
-    "src/index.ts",
-    "src/meta.service.spec.ts"
+    "src/index.ts"
   ],
   "exclude": [
     "node_modules",

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { MetaService } from './meta.service';
 
 @NgModule({
-  providers: [MetaService]
+  providers: [MetaService],
+  exports: [MetaService]
 })
 export class MetaModule { }

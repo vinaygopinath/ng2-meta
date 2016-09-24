@@ -10,19 +10,6 @@ import { MetaConfig } from './models/meta-config';
 
 const isDefined = (val: any) => typeof val !== 'undefined';
 
-// export class MetaConfig {
-
-//   useTitleSuffix: boolean = false;
-//   defaults: any = {};
-
-//   constructor(config?: any) {
-//     if (config) {
-//       this.useTitleSuffix = isDefined(config.useTitleSuffix) ? config.useTitleSuffix : false;
-//       this.defaults = config.defaults || {};
-//     }
-//   }
-// }
-
 @Injectable()
 export class MetaService {
   sub: Subscription;
