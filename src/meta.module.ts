@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MetaService } from './meta.service';
 
 @NgModule({
-  providers: [MetaService],
+  imports: [RouterModule],
   exports: [MetaService]
 })
 export class MetaModule { }
