@@ -47,8 +47,28 @@ export class MetaService {
     });
   }
 
-  private _getOrCreateMetaTag(name: string): HTMLElement {
+  private _getOrCreateMetaTagByName(name: string): HTMLElement {
     let el: HTMLElement = this.document.querySelector('meta[name=\'' + name + '\']');
+    if (!el) {
+      el = this.document.createElement('meta');
+      el.setAttribute('name', name);
+      this.headElement.appendChild(el);
+    }
+    return el;
+  }
+
+  private _getOrCreateMetaTagByProperty(name: string): HTMLElement {
+    let el: HTMLElement = this.document.querySelector('meta[property=\'' + name + '\']');
+    if (!el) {
+      el = this.document.createElement('meta');
+      el.setAttribute('name', name);
+      this.headElement.appendChild(el);
+    }
+    return el;
+  }
+
+  private _getOrCreateMetaTagByItemprop(name: string): HTMLElement {
+    let el: HTMLElement = this.document.querySelector('meta[itemprop=\'' + name + '\']');
     if (!el) {
       el = this.document.createElement('meta');
       el.setAttribute('name', name);
@@ -81,15 +101,23 @@ export class MetaService {
   }
 
   setTitle(title?: string, titleSuffix?: string) {
-    const titleElement = this._getOrCreateMetaTag('title');
-    const ogTitleElement = this._getOrCreateMetaTag('og:title');
+    const titleElementByName = this._getOrCreateMetaTagByName('title');
+    const titleElementByProperty = this._getOrCreateMetaTagByProperty('title');
+    const titleElementByItemProp = this._getOrCreateMetaTagByItemprop('title');
+    const ogTitleElementByName = this._getOrCreateMetaTagByName('og:title');
+    const ogTitleElementByProperty = this._getOrCreateMetaTagByProperty('og:title');
+    const ogTitleElementByItemprop = this._getOrCreateMetaTagByItemprop('og:title');
     let titleStr = isDefined(title) ? title : (this.metaConfig.defaults.title || '');
     if (this.metaConfig.useTitleSuffix) {
       titleStr += isDefined(titleSuffix) ? titleSuffix : (this.metaConfig.defaults.titleSuffix || '');
     }
 
-    titleElement.setAttribute('content', titleStr);
-    ogTitleElement.setAttribute('content', titleStr);
+    titleElementByName.setAttribute('content', titleStr);
+    titleElementByProperty.setAttribute('content', titleStr);
+    titleElementByItemProp.setAttribute('content', titleStr);
+    ogTitleElementByName.setAttribute('content', titleStr);
+    ogTitleElementByProperty.setAttribute('content', titleStr);
+    ogTitleElementByItemprop.setAttribute('content', titleStr);
     this.titleService.setTitle(titleStr);
   }
 
@@ -97,12 +125,22 @@ export class MetaService {
     if (tag === 'title' || tag === 'titleSuffix') {
       throw new Error(`Attempt to set ${tag} through 'setTag': 'title' and 'titleSuffix' are reserved tag names. Please use 'MetaService.setTitle' instead`);
     }
-    const tagElement = this._getOrCreateMetaTag(tag);
+    const tagElementByName = this._getOrCreateMetaTagByName(tag);
+    const tagElementByProperty = this._getOrCreateMetaTagByProperty(tag);
+    const tagElementByItemprop = this._getOrCreateMetaTagByItemprop(tag);
     let tagStr = isDefined(value) ? value : (this.metaConfig.defaults[tag] || '');
-    tagElement.setAttribute('content', tagStr);
+    tagElementByName.setAttribute('content', tagStr);
+    tagElementByProperty.setAttribute('content', tagStr);
+    tagElementByItemprop.setAttribute('content', tagStr);
     if (tag === 'description') {
-      let ogDescElement = this._getOrCreateMetaTag('og:description');
-      ogDescElement.setAttribute('content', tagStr);
+      let ogDescElementByName = this._getOrCreateMetaTagByName('og:description');
+      ogDescElementByName.setAttribute('content', tagStr);
+
+      let ogDescElementByProperty = this._getOrCreateMetaTagByProperty('og:description');
+      ogDescElementByProperty.setAttribute('content', tagStr);
+
+      let ogDescElementByItemprop = this._getOrCreateMetaTagByItemprop('og:description');
+      ogDescElementByItemprop.setAttribute('content', tagStr);
     }
   }
 
