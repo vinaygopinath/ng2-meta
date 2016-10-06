@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Title, DOCUMENT } from '@angular/platform-browser';
 import { Router, NavigationEnd, Event as NavigationEvent, ActivatedRoute } from '@angular/router';
@@ -13,7 +12,7 @@ const isDefined = (val: any) => typeof val !== 'undefined';
 export class MetaService {
   headElement: HTMLElement;
 
-  constructor( @Inject(Router) private router, @Inject(DOCUMENT) private document, @Inject(Title) private titleService, @Inject(ActivatedRoute) private activatedRoute, @Inject('meta.config') @Optional() private metaConfig: MetaConfig = { useTitleSuffix: false, defaults: { title: null, titleSuffix: null } }) {
+  constructor( @Inject(Router) private router: Router, @Inject(DOCUMENT) private document: any, @Inject(Title) private titleService: Title, @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute, @Inject('meta.config') @Optional() private metaConfig: MetaConfig = { useTitleSuffix: false, defaults: { title: null, titleSuffix: null } }) {
     this.headElement = this.document.querySelector('head');
     this.router.events
       .filter(event => (event instanceof NavigationEnd))
