@@ -1,9 +1,15 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MetaService } from './meta.service';
 
 @NgModule({
-  imports: [RouterModule],
-  exports: [MetaService]
+  imports: [RouterModule]
 })
-export class MetaModule { }
+export class MetaModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: MetaModule,
+      providers: [MetaService]
+    };
+  }
+}
