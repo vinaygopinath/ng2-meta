@@ -4,6 +4,7 @@ import { Router, NavigationEnd, Event as NavigationEvent, ActivatedRoute } from 
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 
+import { META_CONFIG } from './meta.module';
 import { MetaConfig } from './models/meta-config';
 
 const isDefined = (val: any) => typeof val !== 'undefined';
@@ -11,8 +12,8 @@ const isDefined = (val: any) => typeof val !== 'undefined';
 @Injectable()
 export class MetaService {
   headElement: HTMLElement;
-
-  constructor( @Inject(Router) private router: Router, @Inject(DOCUMENT) private document: any, @Inject(Title) private titleService: Title, @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute, @Inject('meta.config') @Optional() private metaConfig: MetaConfig = { useTitleSuffix: false, defaults: { title: null, titleSuffix: null } }) {
+  constructor(private router: Router, @Inject(DOCUMENT) private document: any, private titleService: Title, private activatedRoute: ActivatedRoute, 
+              @Inject(META_CONFIG) private metaConfig: MetaConfig) {
     this.headElement = this.document.querySelector('head');
     this.router.events
       .filter(event => (event instanceof NavigationEnd))
