@@ -2,26 +2,29 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "module": "commonjs",
-    "target": "es6",
+    "target": "es5",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "removeComments": true,
     "sourceMap": true,
-    "noEmitOnError": true,
     "declaration": true,
     "outDir": "./dist",
-    "inlineSources": true
+    "noLib": false,
+    "inlineSources": true,
+    "baseUrl": ".",
+    "noEmitOnError": false,
+    "rootDir": "./src",
+    "lib": ["es6", "dom"]
   },
-  "files": [
-    "src/models/meta-config.ts",
-    "src/meta.service.ts",
-    "src/meta.module.ts",
-    "src/index.ts"
+  "include": [
+        "src/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist",
     "typings"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": true
+  }
 }
