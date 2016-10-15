@@ -2,6 +2,8 @@
 
 Update HTML meta tags for title, description and others automatically based on the route in your Angular2 app.
 
+This is an Angular2 SEO/meta tags module. For the Angular 1.x module, check out [ngMeta](https://github.com/vinaygopinath/ngMeta)
+
 ## Getting started
 
 ### Install
@@ -11,15 +13,14 @@ To install this library, run:
 $ npm install ng2-meta --save
 ```
 
-(ng2-meta works with angular2 RC4 and @angular/router 3.0.0-beta.2 and higher)
+ng2-meta works with angular2 2.0.0 and @angular/router 3.0.0 or higher.
 
 ### Modify routes
 
 Add meta tags to routes. By default, `title` and `description` values are duplicated for `og:title` and `og:description`, so there's no need to add them separately.
 <pre>
 <code>
-<strong>import { MetaService } from 'ng2-meta';</strong>
-const routes: RouterConfig = [
+const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
@@ -45,19 +46,27 @@ const routes: RouterConfig = [
 </code>
 </pre>
 
-### Inject MetaService
+### Import MetaModule
 
 <pre>
 <code>
-<strong>import { Title } from '@angular/platform-browser';</strong>
-<strong>import { MetaService } from 'ng2-meta';</strong>
 ...
-bootstrap(AppComponent, [
-  HTTP_PROVIDERS,
-  ...
-  Title,
-  <strong>MetaService</strong>
-]);
+<strong>import { MetaModule } from 'ng2-meta';</strong>
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ...
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    RouterModule.forRoot(routes),
+    <strong>MetaModule.forRoot()</strong>
+  ],
+  bootstrap: [AppComponent]
+})
 </code>
 </pre>
 
@@ -69,7 +78,6 @@ bootstrap(AppComponent, [
 
 @Component({
   ...
-  providers: <strong>[MetaService]</strong>
 })
 export class AppComponent {
   constructor(<strong>private metaService: MetaService</strong>) {}
@@ -87,7 +95,7 @@ Set default values for tags. These values are used when routes without `meta: {}
 ```typescript
 import { MetaConfig, MetaService } from 'ng2-meta';
 
-let metaConfig = new MetaConfig({
+const metaConfig: MetaConfig = {
   //Append a title suffix such as a site name to all titles
   //Defaults to false
   useTitleSuffix: true,
@@ -97,15 +105,19 @@ let metaConfig = new MetaConfig({
     'og:image': 'http://example.com/default-image.png',
     'any other': 'arbitrary tag can be used'
   }
-});
+};
 
-bootstrap(AppComponent, [
-  HTTP_PROVIDERS,
-  ...,
-  Title,
-  provide('meta.config', {useValue: metaConfig}),
-  MetaService
-]);
+@NgModule({
+  declarations: [
+    AppComponent,
+    ...
+  ],
+  imports: [
+    ...,
+    MetaModule.forRoot(metaConfig)
+  ],
+  bootstrap: [AppComponent]
+})
 
 ```
 
@@ -139,32 +151,6 @@ While Google executes Javascript and extracts meta tags set by ng2-meta, many bo
   </head>
 </html>
 ```
-
-## FAQ
-
-#### I'm using angular-cli. How can I add ng2-meta?
-After installing `ng2-meta` from npm, modify your **angular-cli-build.js**
-```javascript
-vendorNpmFiles: [
-....
-'ng2-meta/dist/meta.service.js'
-]
-```
-
-Modify **system-config.ts**
-```typescript
-const map: any = {
-  'ng2-meta': 'vendor/ng2-meta/dist/meta.service.js'
-}
-
-/** User packages configuration. */
-const packages: any = {
-  'ng2-meta': {
-    format: 'cjs'
-  }
-}
-```
-
 
 ## Development
 
