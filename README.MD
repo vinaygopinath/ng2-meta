@@ -1,5 +1,7 @@
 # ng2-meta
 
+[![Join the chat at https://gitter.im/ng2-meta/Lobby](https://badges.gitter.im/ng2-meta/Lobby.svg)](https://gitter.im/ng2-meta/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Update HTML meta tags for title, description and others automatically based on the route in your Angular2 app.
 
 This is an Angular2 SEO/meta tags module. For the Angular 1.x module, check out [ngMeta](https://github.com/vinaygopinath/ngMeta)
