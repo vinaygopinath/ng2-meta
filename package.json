@@ -42,7 +42,7 @@
     "zone.js": "^0.6.25"
   },
   "devDependencies": {
-    "typescript": "^2.0.3"
+    "typescript": "^2.1.0-dev.20161017"
   },
   "engines": {
     "node": ">=4"
