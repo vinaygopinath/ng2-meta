@@ -1,5 +1,11 @@
 #Changelog
 
+## [v2.0.1](https://github.com/vinaygopinath/ng2-meta/releases/tag/v2.0.1)
+
+##### Bugfixes
+
+* [#13](https://github.com/vinaygopinath/ng2-meta/issues/13) Fix "duplicate identifier" error while installing ng2-meta. Thanks [@Bioto](https://github.com/Bioto)
+
 ## [v2.0.0](https://github.com/vinaygopinath/ng2-meta/releases/tag/v2.0.0)
 
 * [#11](https://github.com/vinaygopinath/ng2-meta/issues/11) Support for angular 2.0.0 and router 3.0.0. Thanks to [@bergben](https://github.com/bergben) once again, and the folks in the thread for their input.
