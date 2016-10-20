@@ -14,6 +14,10 @@ To install this library, run:
 ```bash
 $ npm install ng2-meta --save
 ```
+**Note**: If you're seeing errors about "duplicate identifiers", please install ng2-meta directly from GitHub until [#13](https://github.com/vinaygopinath/ng2-meta/issues/13) is resolved.
+```bash
+npm install --save vinaygopinath/ng2-meta
+```
 
 ng2-meta works with angular2 2.0.0 and @angular/router 3.0.0 or higher.
 
