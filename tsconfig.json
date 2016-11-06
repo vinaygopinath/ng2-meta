@@ -15,14 +15,19 @@
     "baseUrl": ".",
     "noEmitOnError": false,
     "rootDir": "./src",
-    "lib": ["es6", "dom"]
+    "lib": [
+      "dom",
+      "es6"
+    ],
+    "types": [
+      "node"
+    ]
   },
   "include": [
-        "src/**/*"
+    "src/**/*"
   ],
   "exclude": [
-    "node_modules",
-    "typings"
+    "node_modules"
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true
