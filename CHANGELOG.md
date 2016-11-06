@@ -1,5 +1,11 @@
 #Changelog
 
+## [v.20.2](https://github.com/vinaygopinath/ng2-meta/releases/tag/v2.0.2)
+
+##### Bugfixes
+
+* [#13](https://github.com/vinaygopinath/ng2-meta/issues/13) Attempt 2 at fixing the "duplicate identifier" error while installing ng2-meta. Thanks [@Chocobozzz](https://github.com/Chocobozzz)
+
 ## [v2.0.1](https://github.com/vinaygopinath/ng2-meta/releases/tag/v2.0.1)
 
 ##### Bugfixes
