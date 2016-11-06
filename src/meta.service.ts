@@ -36,9 +36,9 @@ export class MetaService {
     if (meta.disableUpdate) {
       return false;
     }
-
-    this.setTitle(meta.title, meta.titleSuffix);
-
+    if (meta !== undefined && meta.title !== undefined) {
+      this.setTitle(meta.title, meta.titleSuffix);
+    }
     Object.keys(meta).forEach(key => {
       if (key === 'title' || key === 'titleSuffix') {
         return;
