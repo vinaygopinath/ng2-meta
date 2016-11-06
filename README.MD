@@ -1,5 +1,5 @@
-# ng2-meta
-
+﻿# ng2-meta
+This is fork of vinaygopinath/ng2-meta
 [![Join the chat at https://gitter.im/ng2-meta/Lobby](https://badges.gitter.im/ng2-meta/Lobby.svg)](https://gitter.im/ng2-meta/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Update HTML meta tags for title, description and others automatically based on the route in your Angular2 app.
@@ -16,7 +16,7 @@ $ npm install ng2-meta --save
 ```
 **Note**: If you're seeing errors about "duplicate identifiers", please install ng2-meta directly from GitHub until [#13](https://github.com/vinaygopinath/ng2-meta/issues/13) is resolved.
 ```bash
-npm install --save vinaygopinath/ng2-meta
+npm install --save ng2-meta-defaultoverriden
 ```
 
 ng2-meta works with angular2 2.0.0 and @angular/router 3.0.0 or higher.
@@ -92,40 +92,6 @@ export class AppComponent {
 </pre>
 
 You're all set! ng2-meta will update the meta tags whenever the route changes.
-
-## Options
-
-### Set defaults
-
-Set default values for tags. These values are used when routes without `meta: {}` information are encountered.
-```typescript
-import { MetaConfig, MetaService } from 'ng2-meta';
-
-const metaConfig: MetaConfig = {
-  //Append a title suffix such as a site name to all titles
-  //Defaults to false
-  useTitleSuffix: true,
-  defaults: {
-    title: 'Default title for pages without meta in their route',
-    titleSuffix: ' | Site Name',
-    'og:image': 'http://example.com/default-image.png',
-    'any other': 'arbitrary tag can be used'
-  }
-};
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    ...
-  ],
-  imports: [
-    ...,
-    MetaModule.forRoot(metaConfig)
-  ],
-  bootstrap: [AppComponent]
-})
-
-```
 
 ### Change meta tags programmatically
 ```typescript
