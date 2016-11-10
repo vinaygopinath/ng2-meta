@@ -11,6 +11,8 @@ const isDefined = (val: any) => typeof val !== 'undefined';
 
 @Injectable()
 export class MetaService {
+   private url:string;
+
   constructor(private router: Router, @Inject(DOCUMENT) private document: any, private titleService: Title, private activatedRoute: ActivatedRoute, 
               @Inject(META_CONFIG) private metaConfig: MetaConfig) {
     this.router.events
@@ -31,12 +33,17 @@ export class MetaService {
     return el;
   }
 
+  private notLoaded(): boolean {
+      return this.url != this.document.location.href;
+  }
+
   private _updateMetaTags(meta: any = {}) {
 
     if (meta.disableUpdate) {
       return false;
     }
-    if (meta !== undefined && meta.title !== undefined) {
+
+    if (this.notLoaded()) {
       this.setTitle(meta.title, meta.titleSuffix);
     }
 
@@ -47,12 +54,14 @@ export class MetaService {
       this.setTag(key, meta[key]);
     });
 
-    Object.keys(this.metaConfig.defaults).forEach(key => {
-      if (key in meta || key === 'title' || key === 'titleSuffix') {
-        return;
-      }
-      this.setTag(key, this.metaConfig.defaults[key]);
-    });
+    if (this.notLoaded()) {
+        Object.keys(this.metaConfig.defaults).forEach(key => {
+            if (key in meta || key === 'title' || key === 'titleSuffix') {
+                return;
+            }
+            this.setTag(key, this.metaConfig.defaults[key]);
+        });
+    }
   }
 
   setTitle(title?: string, titleSuffix?: string): MetaService {
@@ -66,6 +75,7 @@ export class MetaService {
     titleElement.setAttribute('content', titleStr);
     ogTitleElement.setAttribute('content', titleStr);
     this.titleService.setTitle(titleStr);
+    this.url = this.document.location.href;
     return this;
   }
 
@@ -81,6 +91,7 @@ export class MetaService {
       let ogDescElement = this._getOrCreateMetaTag('og:description');
       ogDescElement.setAttribute('content', tagStr);
     }
+    this.url = this.document.href;
     return this;
   }
 }

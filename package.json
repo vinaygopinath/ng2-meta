@@ -1,7 +1,7 @@
 {
   "name": "ng2-meta-defaultoverriden",
   "description": "Dynamic meta tags and SEO in Angular2 - Forked from https://github.com/vinaygopinath/ng2-meta",
-  "version": "2.0.4",
+  "version": "2.0.6",
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "prepublish": "tsc",
