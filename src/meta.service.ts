@@ -11,14 +11,25 @@ const isDefined = (val: any) => typeof val !== 'undefined';
 
 @Injectable()
 export class MetaService {
-  constructor(private router: Router, @Inject(DOCUMENT) private document: any, private titleService: Title, private activatedRoute: ActivatedRoute, 
+  constructor(private router: Router, @Inject(DOCUMENT) private document: any, private titleService: Title, private activatedRoute: ActivatedRoute,
               @Inject(META_CONFIG) private metaConfig: MetaConfig) {
     this.router.events
       .filter(event => (event instanceof NavigationEnd))
-      .map(() => (this.activatedRoute && this.activatedRoute.firstChild && this.activatedRoute.firstChild.snapshot && this.activatedRoute.firstChild.snapshot.data))
+      .map(() => this._findLastChild(this.activatedRoute))
       .subscribe((routeData: any) => {
         this._updateMetaTags(routeData.meta);
       });
+  }
+
+  private _findLastChild(activatedRoute: ActivatedRoute) {
+    const snapshot = activatedRoute.snapshot;
+
+    let child = snapshot.firstChild;
+    while (child.firstChild !== null) {
+      child = child.firstChild;
+    }
+
+    return child.data;
   }
 
   private _getOrCreateMetaTag(name: string): HTMLElement {
