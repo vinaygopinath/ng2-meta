@@ -1,6 +1,10 @@
 #Changelog
 
-## [v.20.2](https://github.com/vinaygopinath/ng2-meta/releases/tag/v2.0.2)
+## [v2.0.3](https://github.com/vinaygopinath/ng2-meta/releases/tag/v2.0.3)
+
+* postInstall script fix ([@bergben](https://github.com/bergben)) + support for child routes ([@Chocobozzz](https://github.com/Chocobozzz))
+
+## [v2.0.2](https://github.com/vinaygopinath/ng2-meta/releases/tag/v2.0.2)
 
 ##### Bugfixes
 
