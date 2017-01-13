@@ -1,20 +1,17 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
-    "module": "commonjs",
     "target": "es5",
+    "module": "es2015",
+    "declaration": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "removeComments": true,
-    "sourceMap": true,
-    "declaration": true,
+    "lib": ["es2015", "dom"],
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "rootDirs": [ "./src", "./aot" ],
     "outDir": "./dist",
-    "noLib": false,
-    "inlineSources": true,
-    "baseUrl": ".",
-    "noEmitOnError": false,
-    "rootDir": "./src",
     "lib": [
       "dom",
       "es6"
@@ -23,13 +20,13 @@
       "node"
     ]
   },
-  "include": [
-    "src/**/*"
-  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "index.d.ts"
   ],
   "angularCompilerOptions": {
-    "strictMetadataEmit": true
-  }
+   "genDir": "aot",
+   "skipMetadataEmit" : false
+ }
 }
+
