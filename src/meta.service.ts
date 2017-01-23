@@ -1,6 +1,6 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Title, DOCUMENT } from '@angular/platform-browser';
-import { Router, NavigationEnd, Event as NavigationEvent, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 
@@ -11,13 +11,21 @@ const isDefined = (val: any) => typeof val !== 'undefined';
 
 @Injectable()
 export class MetaService {
-  constructor(private router: Router, @Inject(DOCUMENT) private document: any, private titleService: Title, private activatedRoute: ActivatedRoute,
-              @Inject(META_CONFIG) private metaConfig: MetaConfig) {
+  private defaultsMeta: Object;
+  private defaultsLinks: Object;
+  private defaultsAlternateLinks: Array<string>;
+
+  constructor(private router: Router, @Inject(DOCUMENT) private document: any, private titleService: Title, private activatedRoute: ActivatedRoute, @Inject(META_CONFIG) private metaConfig: MetaConfig) {
+    const defaults = metaConfig.defaults || {};
+    this.defaultsMeta = defaults.meta || {};
+    this.defaultsLinks = defaults.links || {};
+    this.defaultsAlternateLinks = defaults.alternateLinks || [];
+
     this.router.events
       .filter(event => (event instanceof NavigationEnd))
       .map(() => this._findLastChild(this.activatedRoute))
       .subscribe((routeData: any) => {
-        this._updateMetaTags(routeData.meta);
+        this._updateMetaTags(routeData.meta, routeData.links, routeData.alternateLinks);
       });
   }
 
@@ -32,18 +40,30 @@ export class MetaService {
     return child.data;
   }
 
-  private _getOrCreateMetaTag(name: string): HTMLElement {
-    let el: HTMLElement = this.document.querySelector(`meta[name='${name}']`);
+  private _createMetaElement(value: string, key: string = 'name', type: string = 'meta'): HTMLElement {
+    const el = this.document.createElement(type);
+    el.setAttribute(key, value);
+    this.document.head.appendChild(el);
+    return el;
+  }
+
+  private _getOrCreateMetaElement(value: string, key: string = 'name', type: string = 'meta'): HTMLElement {
+    let el: HTMLElement = this.document.querySelector(`${type}[${key}='${value}']`);
     if (!el) {
-      el = this.document.createElement('meta');
-      el.setAttribute('name', name);
-      this.document.head.appendChild(el);
+      el = this._createMetaElement(value, key, type);
     }
     return el;
   }
 
-  private _updateMetaTags(meta: any = {}) {
+  private _removeLinkElements(value: string = 'alternate', key: string = 'rel', type: string = 'link'): void {
+    let linkElement: HTMLElement = this.document.querySelector(`${type}[${key}='${value}']`);
+    while (linkElement) {
+      linkElement.remove();
+      linkElement = this.document.querySelector(`${type}[${key}='${value}']`);
+    }
+  }
 
+  private _updateMetaTags(meta: any = {}, links: any = {}, alternateLinks: Array<string> = []) {
     if (meta.disableUpdate) {
       return false;
     }
@@ -54,43 +74,101 @@ export class MetaService {
       if (key === 'title' || key === 'titleSuffix') {
         return;
       }
-      this.setTag(key, meta[key]);
+      this.setMetaTag(key, meta[key]);
     });
 
-    Object.keys(this.metaConfig.defaults).forEach(key => {
-      if (key in meta || key === 'title' || key === 'titleSuffix') {
+    Object.keys(links).forEach(key => {
+      this.setLinkTag(key, links[key]);
+    });
+
+    this.setAlternateLinkTags(alternateLinks);
+
+    Object.keys(this.defaultsMeta).forEach(metaKey => {
+      if (metaKey in meta || metaKey === 'title' || metaKey === 'titleSuffix') {
         return;
       }
-      this.setTag(key, this.metaConfig.defaults[key]);
+      this.setMetaTag(metaKey, this.defaultsMeta[metaKey]);
     });
+
+    Object.keys(this.defaultsLinks).forEach(linkKey => {
+      if (linkKey in links) {
+        return;
+      }
+      this.setMetaTag(linkKey, this.defaultsLinks[linkKey]);
+    });
+  }
+
+  _setAttribute(el: HTMLElement, name: string, value: string) {
+    el.setAttribute(name, value);
   }
 
   setTitle(title?: string, titleSuffix?: string): MetaService {
-    const titleElement = this._getOrCreateMetaTag('title');
-    const ogTitleElement = this._getOrCreateMetaTag('og:title');
-    let titleStr = isDefined(title) ? title : (this.metaConfig.defaults['title'] || '');
+    const elements = [
+      this._getOrCreateMetaElement('og:title', 'property'),
+      this._getOrCreateMetaElement('twitter:title'),
+    ];
+
+    let titleStr = isDefined(title) ? title : (this.defaultsMeta['title'] || '');
     if (this.metaConfig.useTitleSuffix) {
-      titleStr += isDefined(titleSuffix) ? titleSuffix : (this.metaConfig.defaults['titleSuffix'] || '');
+      titleStr += isDefined(titleSuffix) ? titleSuffix : (this.defaultsMeta['titleSuffix'] || '');
     }
 
-    titleElement.setAttribute('content', titleStr);
-    ogTitleElement.setAttribute('content', titleStr);
+    elements.forEach(el => {
+      this._setAttribute(el, 'content', titleStr);
+    });
+
     this.titleService.setTitle(titleStr);
+
     return this;
   }
 
-  setTag(tag: string, value: string): MetaService {
+  setMetaTag(tag: string, value: string): MetaService {
     if (tag === 'title' || tag === 'titleSuffix') {
       throw new Error(`Attempt to set ${tag} through 'setTag': 'title' and 'titleSuffix' are reserved tag names.
       Please use 'MetaService.setTitle' instead`);
     }
-    const tagElement = this._getOrCreateMetaTag(tag);
-    let tagStr = isDefined(value) ? value : (this.metaConfig.defaults[tag] || '');
-    tagElement.setAttribute('content', tagStr);
+
+    const elements = [this._getOrCreateMetaElement(tag, tag.startsWith('og:') ? 'property' : 'name')];
+
+    let tagStr = isDefined(value) ? value : (this.defaultsMeta[tag] || '');
+
     if (tag === 'description') {
-      let ogDescElement = this._getOrCreateMetaTag('og:description');
-      ogDescElement.setAttribute('content', tagStr);
+      elements.push(this._getOrCreateMetaElement('og:description', 'property'));
+      elements.push(this._getOrCreateMetaElement('twitter:description'));
     }
+
+    elements.forEach(el => {
+      this._setAttribute(el, 'content', tagStr);
+    });
+
+    return this;
+  }
+
+  setLinkTag(rel: string, value: string): MetaService {
+    let linkElement = rel === 'alternate' ?
+        this._createMetaElement(rel, 'rel', 'link') : this._getOrCreateMetaElement(rel, 'rel', 'link');
+
+    let linkStr = isDefined(value) ? value : (this.defaultsLinks[rel] || '');
+
+    linkElement.setAttribute('href', linkStr);
+
+    if (rel === 'canonical') {
+      const ogUrlElement = this._getOrCreateMetaElement('og:url', 'property');
+      ogUrlElement.setAttribute('content', linkStr);
+    }
+
+    return this;
+  }
+
+  setAlternateLinkTags(values: Array<string>): MetaService {
+    this._removeLinkElements();
+
+    let alternateLinksArr: Array<string> = values.length > 0 ? values : this.defaultsAlternateLinks;
+
+    alternateLinksArr.forEach((alternate) => {
+      this.setLinkTag('alternate', alternate);
+    });
+
     return this;
   }
 }

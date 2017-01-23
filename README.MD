@@ -45,7 +45,15 @@ const routes: Routes = [
         title: 'Dashboard',
         description: 'Description of the dashboard page',
         'og:image': 'http://example.com/dashboard-image.png'
-      }
+      },
+      link: {
+        canonical: 'http://example.com/dashboard',
+        publisher: 'https://plus.google.com/+Example'
+      },
+      alternateLinks: [
+        'http://example.co/dashboard',
+        'http://eg.com/dashboard'
+      ]
     }</strong>
   }
 ];
@@ -106,10 +114,19 @@ const metaConfig: MetaConfig = {
   //Defaults to false
   useTitleSuffix: true,
   defaults: {
-    title: 'Default title for pages without meta in their route',
-    titleSuffix: ' | Site Name',
-    'og:image': 'http://example.com/default-image.png',
-    'any other': 'arbitrary tag can be used'
+    meta: {
+      title: 'Default title for pages without meta in their route',
+      titleSuffix: ' | Site Name',
+      'og:image': 'http://example.com/default-image.png',
+      'any other': 'arbitrary tag can be used'
+    },
+    links: {
+      canonical: 'http://example.com',
+    },
+    alternateLinks: [
+        'http://example.co',
+        'http://eg.com'
+    ],
   }
 };
 
@@ -138,7 +155,9 @@ class ProductComponent implements OnInit {
   ngOnInit() {
     this.product = //HTTP GET for product in catalogue
     this.metaService.setTitle('Product page for '+this.product.name);
-    this.metaService.setTag('og:image',this.product.imageURL);
+    this.metaService.setMetaTag('og:image',this.product.imageURL);
+    this.metaService.setLinkTag('publisher', this.product.publisher);
+    this.metaService.setAlternateLinkTags(this.product.alternateLinks);
   }
 }
 ```

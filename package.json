@@ -4,6 +4,7 @@
   "version": "2.0.3",
   "scripts": {
     "lint": "tslint src/**/*.ts",
+    "postinstall": "tsc",
     "prepublish": "tsc",
     "tsc": "tsc"
   },
@@ -29,18 +30,21 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "dependencies": {
-    "reflect-metadata": "^0.1.8",
-    "@angular/common": "^2.0.0",
-    "@angular/core": "^2.0.0",
-    "@angular/platform-browser": "^2.0.0",
-    "@angular/router": "^3.0.0",
-    "@types/node": "^6.0.38",
+    "reflect-metadata": "^0.1.9",
+    "@angular/common": "^2.4.4",
+    "@angular/core": "^2.4.4",
+    "@angular/platform-browser": "^2.4.4",
+    "@angular/router": "^3.4.4",
+    "@types/node": "^7.0.1",
     "core-js": "^2.4.1",
-    "rxjs": "^5.0.0-beta.12",
-    "zone.js": "^0.6.25"
+    "rxjs": "^5.0.3",
+    "zone.js": "^0.7.6"
   },
   "devDependencies": {
-    "typescript": "^2.1.0-dev.20161017"
+    "@angular/compiler": "^2.4.4",
+    "codelyzer": "^2.0.0-beta.4",
+    "tslint": "^4.3.1",
+    "typescript": "^2.1.5"
   },
   "engines": {
     "node": ">=4"
