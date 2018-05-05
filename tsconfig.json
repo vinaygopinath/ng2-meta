@@ -1,35 +1,29 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
-    "module": "commonjs",
-    "target": "es5",
+    "declaration": true,
+    "sourceMap": true,
+    "inlineSources": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "removeComments": true,
-    "sourceMap": true,
-    "declaration": true,
-    "outDir": "./dist",
-    "noLib": false,
-    "inlineSources": true,
-    "baseUrl": ".",
-    "noEmitOnError": false,
-    "rootDir": "./src",
+    "importHelpers": true,
+    "types": [],
     "lib": [
       "dom",
-      "es6"
+      "es2015"
     ],
-    "types": [
-      "node"
-    ]
+    "noImplicitAny": true,
+    "module": "es2015",
+    "target": "es2015",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "outDir": "./dist",
+    "noEmitOnError": false
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
   "angularCompilerOptions": {
-    "strictMetadataEmit": true
+    "annotateForClosureCompiler": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

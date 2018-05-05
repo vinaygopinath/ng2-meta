@@ -2,9 +2,9 @@
 
 [![Join the chat at https://gitter.im/ng2-meta/Lobby](https://badges.gitter.im/ng2-meta/Lobby.svg)](https://gitter.im/ng2-meta/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Update HTML meta tags for title, description and others automatically based on the route in your Angular2 app.
+Update HTML meta tags for title, description and others automatically based on the route in your Angular app.
 
-This is an Angular2 SEO/meta tags module. For the Angular 1.x module, check out [ngMeta](https://github.com/vinaygopinath/ngMeta)
+This is an Angular SEO/meta tags module. For the AngularJS (1.x) module, check out [ngMeta](https://github.com/vinaygopinath/ngMeta)
 
 ## Getting started
 
@@ -14,12 +14,12 @@ To install this library, run:
 ```bash
 $ npm install ng2-meta --save
 ```
-**Note**: If you're seeing errors about "duplicate identifiers", please install ng2-meta directly from GitHub until [#13](https://github.com/vinaygopinath/ng2-meta/issues/13) is resolved.
+
 ```bash
 npm install --save vinaygopinath/ng2-meta
 ```
 
-ng2-meta works with angular2 2.0.0 and @angular/router 3.0.0 or higher.
+ng2-meta works with angular 5.x and @angular/router 5.x or higher.
 
 ### Modify routes
 
@@ -134,7 +134,7 @@ import { Component, OnInit } from '@angular/core';
 class ProductComponent implements OnInit {
   ...
   constructor(private metaService: MetaService) {}
-  
+
   ngOnInit() {
     this.product = //HTTP GET for product in catalogue
     this.metaService.setTitle('Product page for '+this.product.name);
@@ -158,19 +158,11 @@ While Google executes Javascript and extracts meta tags set by ng2-meta, many bo
 </html>
 ```
 
-## Development
+## Contribute
 
-To generate all `*.js`, `*.js.map` and `*.d.ts` files:
+If you wish to contribute to this repo, please check out the [open issues](https://github.com/vinaygopinath/ng2-meta/issues).
 
-```bash
-$ npm run tsc
-```
-
-To lint all `*.ts` files:
-
-```bash
-$ npm run lint
-```
+If you notice a bug that has not already been reported or would like to make a feature request, please create a [new issue](https://github.com/vinaygopinath/ng2-meta/issues/new). This helps to start a discussion with the community and avoid duplication of effort before you make any changes.
 
 ## Licence
 

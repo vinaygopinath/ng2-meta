@@ -3,9 +3,13 @@
   "description": "Dynamic meta tags and SEO in Angular2",
   "version": "2.0.3",
   "scripts": {
-    "lint": "tslint src/**/*.ts",
-    "prepublish": "tsc",
-    "tsc": "tsc"
+    "lint": "tslint src/**/*.ts -p tsconfig.json",
+    "build": "ng-packagr -p package.json"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/index.ts"
+    }
   },
   "repository": {
     "type": "git",
@@ -13,7 +17,8 @@
   },
   "author": {
     "name": "Vinay Gopinath",
-    "email": "vinay@vinaygopinath.me"
+    "email": "vinay@vinaygopinath.me",
+    "url": "https://www.vinaygopinath.me"
   },
   "keywords": [
     "angular",
@@ -26,23 +31,29 @@
   "bugs": {
     "url": "https://github.com/vinaygopinath/ng2-meta/issues"
   },
-  "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
-  "dependencies": {
-    "reflect-metadata": "^0.1.8",
-    "@angular/common": "^2.0.0",
-    "@angular/core": "^2.0.0",
-    "@angular/platform-browser": "^2.0.0",
-    "@angular/router": "^3.0.0",
-    "@types/node": "^6.0.38",
+  "peerDependencies": {
+    "@angular/common": "^5.2.10",
+    "@angular/compiler": "^5.2.10",
+    "@angular/compiler-cli": "^5.2.10",
+    "@angular/core": "^5.2.10",
+    "@angular/platform-browser": "^5.2.10",
+    "@angular/router": "^5.2.10",
     "core-js": "^2.4.1",
-    "rxjs": "^5.0.0-beta.12",
-    "zone.js": "^0.6.25"
+    "zone.js": "^0.8.26",
+    "rxjs": "^5.5.10"
   },
   "devDependencies": {
-    "typescript": "^2.1.0-dev.20161017"
+    "@angular/compiler": "^5.2.10",
+    "@angular/compiler-cli": "^5.2.10",
+    "@types/node": "^6.0.46",
+    "codelyzer": "^4.3.0",
+    "ng-packagr": "^2.4.2",
+    "tsickle": "^0.27.5",
+    "tslint": "^5.10.0",
+    "typescript": "^2.4"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">= 6.9.0",
+    "npm": ">= 3.0.0"
   }
 }

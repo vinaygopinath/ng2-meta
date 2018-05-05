@@ -4,17 +4,21 @@ import { Router, NavigationEnd, Event as NavigationEvent, ActivatedRoute } from 
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 
-import { META_CONFIG } from './meta.module';
-import { MetaConfig } from './models/meta-config';
+import { MetaConfig, META_CONFIG_TOKEN } from './models/meta-config';
 
 const isDefined = (val: any) => typeof val !== 'undefined';
 
 @Injectable()
 export class MetaService {
-  constructor(private router: Router, @Inject(DOCUMENT) private document: any, private titleService: Title, private activatedRoute: ActivatedRoute,
-              @Inject(META_CONFIG) private metaConfig: MetaConfig) {
+  constructor(
+    private router: Router,
+    @Inject(DOCUMENT) private document: any,
+    private titleService: Title,
+    private activatedRoute: ActivatedRoute,
+    @Inject(META_CONFIG_TOKEN) private metaConfig: MetaConfig
+  ) {
     this.router.events
-      .filter(event => (event instanceof NavigationEnd))
+      .filter((event: NavigationEvent) => (event instanceof NavigationEnd))
       .map(() => this._findLastChild(this.activatedRoute))
       .subscribe((routeData: any) => {
         this._updateMetaTags(routeData.meta);
