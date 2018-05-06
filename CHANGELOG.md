@@ -1,5 +1,9 @@
 #Changelog
 
+## [v3.0.0](https://github.com/vinaygopinath/ng2-meta/releases/tag/v3.0.0)
+
+* Angular 5.x compatibility + AOT support
+
 ## [v2.0.3](https://github.com/vinaygopinath/ng2-meta/releases/tag/v2.0.3)
 
 * postInstall script fix ([@bergben](https://github.com/bergben)) + support for child routes ([@Chocobozzz](https://github.com/Chocobozzz))
