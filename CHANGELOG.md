@@ -1,5 +1,10 @@
 #Changelog
 
+## [v3.0.1](https://github.com/vinaygopinath/ng2-meta/releases/tag/v3.0.1)
+
+* [WIP] [Server-side rendering] Remove dependency on window.document
+* Set `property` attribute for opengraph tags (and `name` attribute for all others)
+
 ## [v3.0.0](https://github.com/vinaygopinath/ng2-meta/releases/tag/v3.0.0)
 
 * Angular 5.x compatibility + AOT support
