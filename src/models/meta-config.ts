@@ -1,5 +1,10 @@
 import { InjectionToken } from '@angular/core';
 
+export const DEFAULT_META_CONFIG: MetaConfig = {
+  useTitleSuffix: false,
+  warnMissingGuard: true,
+  defaults: {}
+};
 /**
  * Additional site-wide configuration of meta tags.
  *
@@ -23,6 +28,17 @@ export interface MetaConfig {
    */
   useTitleSuffix?: boolean;
   /**
+   * Flag to show a warning for each route that is missing MetaGuard in its `canActivate` array when
+   * * the route contains `data: { meta: {} }`
+   *
+   * OR
+   *
+   * * the site-wide MetaConfig contains default meta tags
+   *
+   * Default value: true
+   */
+  warnMissingGuard?: boolean;
+  /**
    * A dictionary of default meta tags and their values
    */
   defaults?: {
@@ -35,8 +51,5 @@ export interface MetaConfig {
      * and a route does not have its own titleSuffix.
      */
     titleSuffix?: string;
-    [key: string]: string | undefined;
-  };
+  } & { [key: string]: string | undefined; };
 }
-
-export const META_CONFIG_TOKEN = new InjectionToken<MetaConfig>('meta config');

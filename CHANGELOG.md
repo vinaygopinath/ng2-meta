@@ -1,5 +1,12 @@
 #Changelog
 
+## [v4.0.0](https://github.com/vinaygopinath/ng2-meta/releases/tag/v3.0.1)
+
+**Breaking change**: All routes must contain `canActivate: [MetaGuard]` in their route configuration to notify `ng2-meta` when the route is about to change.
+
+* More consistent meta tag updates: Meta tags are now set *before* the route is activated. Fixes [#7](https://github.com/vinaygopinath/ng2-meta/issues/7)
+
+
 ## [v3.0.1](https://github.com/vinaygopinath/ng2-meta/releases/tag/v3.0.1)
 
 * [WIP] [Server-side rendering] Remove dependency on window.document

@@ -44,3 +44,4 @@ jspm_packages
 *.d.ts
 typings
 dist
+dist.tgz

@@ -23,14 +23,17 @@ ng2-meta works with angular 5.x and @angular/router 5.x or higher.
 
 ### Modify routes
 
-Add meta tags to routes. By default, `title` and `description` values are duplicated for `og:title` and `og:description`, so there's no need to add them separately.
+Add meta tags and `MetaGuard` to routes. By default, `title` and `description` values are duplicated for `og:title` and `og:description`, so there's no need to add them separately.
 <pre>
 <code>
+<strong>import { MetaGuard } from 'ng2-meta';</strong>
+
 const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    <strong>data: {
+    <strong>canActivate: [MetaGuard],
+    data: {
       meta: {
         title: 'Home page',
         description: 'Description of the home page'
@@ -40,7 +43,8 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    <strong>data: {
+    <strong>canActivate: [MetaGuard],
+    data: {
       meta: {
         title: 'Dashboard',
         description: 'Description of the dashboard page',

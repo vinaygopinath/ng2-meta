@@ -1,15 +1,17 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
-import { Router, NavigationEnd, Event as NavigationEvent, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, Event as NavigationEvent, ActivatedRoute, Route } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 
-import { MetaConfig, META_CONFIG_TOKEN } from './models/meta-config';
+import { MetaConfig } from './models/meta-config';
+import { META_CONFIG_TOKEN, META_GUARD_IDENTIFIER } from './models/meta-constants';
 
 const isDefined = (val: any) => typeof val !== 'undefined';
 
 @Injectable()
 export class MetaService {
+
   public constructor(
     private router: Router,
     private meta: Meta,
@@ -17,58 +19,7 @@ export class MetaService {
     private activatedRoute: ActivatedRoute,
     @Inject(META_CONFIG_TOKEN) private metaConfig: MetaConfig
   ) {
-    this.router.events
-      .filter((event: NavigationEvent) => (event instanceof NavigationEnd))
-      .map(() => this._findLastChild(this.activatedRoute))
-      .subscribe((routeData: any) => {
-        this._processRouteMetaTags(routeData.meta);
-      });
-  }
-
-  private _findLastChild(activatedRoute: ActivatedRoute) {
-    const snapshot = activatedRoute.snapshot;
-
-    let child = snapshot.firstChild;
-    while (child.firstChild !== null) {
-      child = child.firstChild;
-    }
-
-    return child.data;
-  }
-
-  private _updateMetaTag(tag: string, value: string) {
-    let prop = 'name';
-    if (tag.startsWith(`og:`)) {
-      prop = 'property';
-    }
-
-    this.meta.updateTag({
-      [prop]: tag,
-      content: value
-    });
-  }
-
-  private _processRouteMetaTags(meta: any = {}) {
-
-    if (meta.disableUpdate) {
-      return;
-    }
-
-    this.setTitle(meta.title, meta.titleSuffix);
-
-    Object.keys(meta).forEach(key => {
-      if (key === 'title' || key === 'titleSuffix') {
-        return;
-      }
-      this.setTag(key, meta[key]);
-    });
-
-    Object.keys(this.metaConfig.defaults).forEach(key => {
-      if (key in meta || key === 'title' || key === 'titleSuffix') {
-        return;
-      }
-      this.setTag(key, this.metaConfig.defaults[key]);
-    });
+    this._warnMissingGuard();
   }
 
   public setTitle(title?: string, titleSuffix?: string): MetaService {
@@ -97,4 +48,44 @@ export class MetaService {
 
     return this;
   }
+
+  private _updateMetaTag(tag: string, value: string) {
+    let prop = 'name';
+    if (tag.startsWith(`og:`)) {
+      prop = 'property';
+    }
+
+    this.meta.updateTag({
+      [prop]: tag,
+      content: value
+    });
+  }
+
+  private _warnMissingGuard() {
+    if (isDefined(this.metaConfig.warnMissingGuard) && !this.metaConfig.warnMissingGuard) {
+      return;
+    }
+
+    const hasDefaultMeta = !!Object.keys(this.metaConfig.defaults).length;
+    const hasMetaGuardInArr = (it: any) => (it && it.IDENTIFIER === META_GUARD_IDENTIFIER);
+    let hasShownWarnings = false;
+    this.router.config.forEach((route: Route) => {
+      const hasRouteMeta = route.data && route.data.meta;
+      const showWarning = !isDefined(route.redirectTo)
+        && (hasDefaultMeta || hasRouteMeta)
+        && !(route.canActivate || []).some(hasMetaGuardInArr);
+
+      if (showWarning) {
+        console.warn(`Route with path "${route.path}" has ${hasRouteMeta ? '' : 'default '}meta tags, but does not use MetaGuard. \
+Please add MetaGuard to the canActivate array in your route configuration`);
+        hasShownWarnings = true;
+      }
+    });
+
+    if (hasShownWarnings) {
+      console.warn(`To disable these warnings, set metaConfig.warnMissingGuard: false \
+in your ng2-meta MetaConfig passed to MetaModule.forRoot()`);
+    }
+  }
+
 }
