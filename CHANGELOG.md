@@ -1,6 +1,10 @@
 #Changelog
 
-## [v4.0.0](https://github.com/vinaygopinath/ng2-meta/releases/tag/v3.0.1)
+## [v5.0.0](https://github.com/vinaygopinath/ng2-meta/releases/tag/v5.0.0)
+
+**Breaking change**: ng2-meta depends on Angular 6+ and rxjs 6+. Ensure that your site works with Angular 6 before you upgrade to this version.
+
+## [v4.0.0](https://github.com/vinaygopinath/ng2-meta/releases/tag/v4.0.0)
 
 **Breaking change**: All routes must contain `canActivate: [MetaGuard]` in their route configuration to notify `ng2-meta` when the route is about to change.
 
