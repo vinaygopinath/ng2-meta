@@ -4,7 +4,10 @@
 
 Update HTML meta tags for title, description and others automatically based on the route in your Angular app.
 
-This is an Angular SEO/meta tags module. For the AngularJS (1.x) module, check out [ngMeta](https://github.com/vinaygopinath/ngMeta)
+ng2-meta v5.0.0+ requires **Angular 6**.
+On **Angular 5** or lower, use ng2-meta v4.0.0 (`npm install ng2-meta@4.0.0`)
+
+For the AngularJS (1.x) module, check out [ngMeta](https://github.com/vinaygopinath/ngMeta)
 
 ## Getting started
 
@@ -14,12 +17,6 @@ To install this library, run:
 ```bash
 $ npm install ng2-meta --save
 ```
-
-```bash
-npm install --save vinaygopinath/ng2-meta
-```
-
-ng2-meta works with angular 5.x and @angular/router 5.x or higher.
 
 ### Modify routes
 

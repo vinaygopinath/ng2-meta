@@ -1,8 +1,6 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
-import { Router, NavigationEnd, Event as NavigationEvent, ActivatedRoute, Route } from '@angular/router';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
+import { Router, ActivatedRoute, Route } from '@angular/router';
 
 import { MetaConfig } from './models/meta-config';
 import { META_CONFIG_TOKEN, META_GUARD_IDENTIFIER } from './models/meta-constants';

@@ -20,6 +20,7 @@
     "noEmitOnError": false
   },
   "angularCompilerOptions": {
+    "preserveWhitespaces": false,
     "annotateForClosureCompiler": true,
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
